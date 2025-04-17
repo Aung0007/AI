@@ -14,6 +14,7 @@ export const createUserController = async (req, res) => {
 
         // Re-fetch the user to access instance methods
         const token = user.generateJWT();
+        delete user._doc.password; // Remove password from the response
 
         res.status(201).json({ user, token });
     } catch (error) {
