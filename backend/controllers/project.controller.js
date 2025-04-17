@@ -60,31 +60,34 @@ export const addUserToProject = async (req, res) => {
     }
 
     try {
+        const { projectId, users } = req.body;
 
-        const { projectId, users } = req.body
-
+        // Find the logged-in user
         const loggedInUser = await userModel.findOne({
             email: req.user.email
-        })
+        });
 
+        // Check if the user exists
+        if (!loggedInUser) {
+            return res.status(404).json({ error: "Logged-in user not found" });
+        }
 
+        // Proceed with adding users to the project
         const project = await projectService.addUsersToProject({
             projectId,
             users,
             userId: loggedInUser._id
-        })
+        });
 
         return res.status(200).json({
             project,
-        })
+        });
 
     } catch (err) {
-        console.log(err)
-        res.status(400).json({ error: err.message })
+        console.log(err);
+        res.status(400).json({ error: err.message });
     }
-
-
-}
+};
 
 export const getProjectById = async (req, res) => {
 

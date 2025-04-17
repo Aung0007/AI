@@ -32,5 +32,5 @@ userSchema.methods.generateJWT= function () {
     });
 }
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model("user", userSchema); // Change "User" to "user"
 export default User;
